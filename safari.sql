@@ -43,7 +43,7 @@ INSERT INTO enclosure (name, capacity, closed_for_maintenance) VALUES ('Canopy',
 INSERT INTO animals (name, type, age, enclosure_id) VALUES ('Poppy', 'Frog', 10, 2);
 INSERT INTO animals (name, type, age, enclosure_id) VALUES ('Alex', 'Monkey', 10, 4);
 INSERT INTO animals (name, type, age, enclosure_id) VALUES ('Leo', 'Lion', 8, 1);
-INSERT INTO animals (name, type, age, enclosure_id) VALUES ('Bradley', 'Parrot', 20, 5);
+INSERT INTO animals (name, type, age, enclosure_id) VALUES ('Bradley', 'Parrot', 30, 5);
 INSERT INTO animals (name, type, age, enclosure_id) VALUES ('Jennifer', 'Camel', 30, 3);
 
 INSERT INTO staff (name, employee_number) VALUES ('Robbie', 108098);
@@ -73,3 +73,30 @@ ON enclosure.id = assignments.enclosure_id
 WHERE enclosure.id = 2;
 
 -- 'ON' describes the shared attribute between two tables i.e. PK and FK
+
+-- Extensions
+
+
+-- The names of staff working in enclosures which are closed for maintenance
+
+SELECT staff.name FROM staff
+INNER JOIN assignments
+ON staff.id = assignments.employee_id
+INNER JOIN enclosure 
+ON assignments.enclosure_id = enclosure.id
+WHERE enclosure.closed_for_maintenance= TRUE;
+
+
+
+
+-- The name of the enclosure where the oldest animal lives. If there are two animals who are the same age choose the first one alphabetically.
+
+
+SELECT animals.name FROM animals
+INNER JOIN enclosure
+ON animals.enclosure_id = enclosure.id
+ORDER BY animals.age DESC, animals.name ASC;
+
+-- The number of different animal types a given keeper has been assigned to work with.
+-- The number of different keepers who have been assigned to work in a given enclosure
+-- The names of the other animals sharing an enclosure with a given animal (eg. find the names of all the animals sharing the big cat field with Tony)
